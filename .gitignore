@@ -1,0 +1,4 @@
+sqldata/Databases/**
+website/Data/**
+solrdata/*
+website/Website/**

@@ -1,0 +1,28 @@
+version: '3'
+services:
+  sql2017:
+    build:
+      context: sqldata/.
+    environment:
+      SA_PASSWORD: Qwerty123
+      ACCEPT_EULA: "Y"
+      ATTACH_DBS: "[{'dbName':'Sitecore_Core','dbFiles':['C:\\\\SQLData\\\\Databases\\\\Sitecore.Core.mdf','C:\\\\SQLData\\\\Databases\\\\Sitecore.Core.ldf']},{'dbName':'Sitecore_Master','dbFiles':['C:\\\\SQLData\\\\Databases\\\\Sitecore.Master.mdf','C:\\\\SQLData\\\\Databases\\\\Sitecore.Master.ldf']},{'dbName':'Sitecore_Web','dbFiles':['C:\\\\SQLData\\\\Databases\\\\Sitecore.Web.mdf','C:\\\\SQLData\\\\Databases\\\\Sitecore.Web.ldf']},{'dbName':'Sitecore_Analytics','dbFiles':['C:\\\\SQLData\\\\Databases\\\\Sitecore.Analytics.mdf','C:\\\\SQLData\\\\Databases\\\\Sitecore.Analytics.ldf']}]"
+    ports:
+      - "1422:1433"
+  https-solr:
+    image: sharpslinger/https-solr
+    ports:
+      - "8984:8983"
+    volumes:
+      - ./solrdata:/solrhome
+    environment:
+      SOLR_HOME: /solrhome
+      INIT_SOLR_HOME: "yes"
+  web:
+    build: .
+    ports:
+      - "81:80"
+    volumes:
+      - "./website:c:/webroot"
+      
+  
